@@ -1,0 +1,6 @@
+app.shop-server.baseUrl: http://localhost:8080
+
+server:
+  port: ${PORT:8081}
+
+spring.mvc.pathmatch.matching-strategy: ANT_PATH_MATCHER
