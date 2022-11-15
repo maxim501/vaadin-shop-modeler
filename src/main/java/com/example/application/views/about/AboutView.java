@@ -19,8 +19,8 @@ public class AboutView extends VerticalLayout {
         img.setWidth("200px");
         add(img);
 
-        add(new H2("This place intentionally left empty"));
-        add(new Paragraph("It’s a place where you can grow your own UI 🤗"));
+        add(new H2("Баскетбольный магазин"));
+        add(new Paragraph("Одна птица учит другую прогать)"));
 
         setSizeFull();
         setJustifyContentMode(JustifyContentMode.CENTER);
