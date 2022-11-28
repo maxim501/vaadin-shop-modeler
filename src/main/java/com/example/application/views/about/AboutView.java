@@ -1,5 +1,6 @@
 package com.example.application.views.about;
 
+import com.example.application.Constants;
 import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;
@@ -8,7 +9,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@PageTitle("About")
+@PageTitle(Constants.TITLE_APP_NAV.ABOUT)
 @Route(value = "about", layout = MainLayout.class)
 public class AboutView extends VerticalLayout {
 
