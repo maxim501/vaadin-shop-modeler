@@ -21,7 +21,7 @@ public class ProductEditorView extends AbstractEditorView<ProductDto, ProductEdi
 
     @Override
     public void buildView() {
-        ProductDto item = editor.getItem();
+        ProductDto item = getEditor().getItem();
 
         FormLayout formLayout = new FormLayout();
 
@@ -51,7 +51,7 @@ public class ProductEditorView extends AbstractEditorView<ProductDto, ProductEdi
         Select<CompanyDto> companyField = select(
                 "Компания",
                 item.getCompany(),
-                editor.getCompanies(),
+                getEditor().getCompanies(),
                 CompanyDto::getName,
                 ProductDto::setCompany);
 
@@ -65,7 +65,7 @@ public class ProductEditorView extends AbstractEditorView<ProductDto, ProductEdi
 
     @Override
     public String caption() {
-        ProductDto item = editor.getItem();
+        ProductDto item = getEditor().getItem();
         if (item == null || StringUtils.isBlank(item.getNameModel())) {
             return "Новый товар";
         }

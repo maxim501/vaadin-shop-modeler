@@ -6,6 +6,7 @@ import com.am.basketballshop.api.dto.subSection.SubSectionDto;
 import com.example.application.Constants;
 import com.example.application.views.MainLayout;
 import com.example.application.views.base.AbstractBrowserView;
+import com.example.application.views.base.EditorCloseListener;
 import com.example.application.views.base.FactoryEditorView;
 import com.example.application.views.base.actions.HasAddAction;
 import com.example.application.views.base.actions.HasDeleteAction;
@@ -26,7 +27,7 @@ import java.util.Set;
 @Route(value = "product/:subSectionId", layout = MainLayout.class)
 public class ProductBrowserView
         extends AbstractBrowserView<ProductDto, ProductBrowser>
-        implements BeforeEnterObserver, HasAddAction, HasEditAction, HasDeleteAction {
+        implements BeforeEnterObserver, HasAddAction, HasEditAction, HasDeleteAction, EditorCloseListener {
 
     private final ProductBrowser browser;
     private final FactoryEditorView factoryEditorView;
@@ -86,7 +87,9 @@ public class ProductBrowserView
     @Override
     public void add() {
         SubSectionDto subSection = browser.getSubSection(subSectionId);
-        factoryEditorView.productEditorViewNew(subSection).open();
+        ProductEditorView productEditorView = factoryEditorView.productEditorViewNew(subSection);
+        productEditorView.addEditorCloseListener(this);
+        productEditorView.open();
     }
 
     @Override
@@ -101,6 +104,7 @@ public class ProductBrowserView
         }
 
         browser.deleteProduct(selectedItems.iterator().next().getId());
+        refreshGrid();
     }
 
     @Override
@@ -114,6 +118,19 @@ public class ProductBrowserView
             return;
         }
 
-        factoryEditorView.productEditorView(selectedItems.iterator().next().getId()).open();
+        ProductEditorView productEditorView = factoryEditorView.productEditorView(selectedItems.iterator().next().getId());
+        productEditorView.addEditorCloseListener(this);
+        productEditorView.open();
+    }
+
+    @Override
+    public void afterClose() {
+        refreshGrid();
+    }
+
+    private void refreshGrid() {
+        browser.refresh(Map.of("subSectionId", subSectionId));
+        grid.setItems(browser.getListItems());
+        grid.getDataProvider().refreshAll();
     }
 }

@@ -13,6 +13,10 @@ public abstract class AbstractBrowser<T> {
         listItems = loadList(params);
     }
 
+    public void refresh(Map<String, Object> params) {
+        listItems = loadList(params);
+    }
+
     public List<T> getListItems() {
         return listItems;
     }

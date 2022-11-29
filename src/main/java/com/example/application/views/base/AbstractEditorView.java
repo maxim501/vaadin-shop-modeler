@@ -22,7 +22,8 @@ import java.util.function.BiConsumer;
 
 public abstract class AbstractEditorView<T, K extends AbstractEditor<T>> extends Dialog {
 
-    protected K editor;
+    private K editor;
+    private EditorCloseListener editorCloseListener;
 
     public void init(K editor) {
         this.editor = editor;
@@ -49,6 +50,10 @@ public abstract class AbstractEditorView<T, K extends AbstractEditor<T>> extends
         getFooter().add(createSaveBtn());
     }
 
+    public K getEditor() {
+        return editor;
+    }
+
     public abstract void buildView();
 
     public abstract String caption();
@@ -69,6 +74,10 @@ public abstract class AbstractEditorView<T, K extends AbstractEditor<T>> extends
     private void closeInternal() {
         //todo добавить проверку на isModified если есть изменения спрашивать точно ли хотите закрыть окно
         close();
+
+        if (editorCloseListener != null) {
+            editorCloseListener.afterClose();
+        }
     }
 
     //===========Создание различных полей================
@@ -148,5 +157,12 @@ public abstract class AbstractEditorView<T, K extends AbstractEditor<T>> extends
                                                        AbstractField.ComponentValueChangeEvent<C, V> event) {
         Objects.requireNonNull(editor);
         editor.callListener(listener, event);
+    }
+
+    public void addEditorCloseListener(EditorCloseListener listener) {
+        if (editorCloseListener == listener) {
+            return;
+        }
+        editorCloseListener = listener;
     }
 }
