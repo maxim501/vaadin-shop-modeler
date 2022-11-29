@@ -9,6 +9,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -17,12 +18,23 @@ public abstract class AbstractBrowserView<T, K extends AbstractBrowser<T>> exten
     private K browser;
     private Component currentComponent;
 
-    public void init(K browser, Map<String, Object> params) {
-        this.browser = browser;
+    public void init(Map<String, Object> params) {
         Objects.requireNonNull(browser);
         browser.init(params);
 
         buildViewInternal();
+    }
+
+    public void setBrowser(K browser) {
+        this.browser = browser;
+    }
+
+    public K getBrowser() {
+        return browser;
+    }
+
+    protected List<T> getItems() {
+        return getBrowser().getListItems();
     }
 
     private void buildViewInternal() {

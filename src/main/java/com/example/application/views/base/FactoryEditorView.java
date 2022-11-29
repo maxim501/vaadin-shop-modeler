@@ -23,7 +23,7 @@ public class FactoryEditorView {
         return new ProductEditorView(editor);
     }
 
-    public ProductEditorView productEditorViewNew(SubSectionDto subSectionDto) {
+    public ProductEditorView productEditorView(SubSectionDto subSectionDto) {
         ProductEditor editor = createEditor(ProductEditor.class);
         editor.setSubSection(subSectionDto);
 

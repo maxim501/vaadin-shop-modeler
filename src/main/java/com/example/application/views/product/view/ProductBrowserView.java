@@ -29,7 +29,6 @@ public class ProductBrowserView
         extends AbstractBrowserView<ProductDto, ProductBrowser>
         implements BeforeEnterObserver, HasAddAction, HasEditAction, HasDeleteAction, EditorCloseListener {
 
-    private final ProductBrowser browser;
     private final FactoryEditorView factoryEditorView;
 
     private String subSectionId;
@@ -38,7 +37,7 @@ public class ProductBrowserView
 
     @Autowired
     public ProductBrowserView(ProductBrowser productBrowser, FactoryEditorView factoryEditorView) {
-        this.browser = productBrowser;
+        setBrowser(productBrowser);
         this.factoryEditorView = factoryEditorView;
     }
 
@@ -48,7 +47,7 @@ public class ProductBrowserView
         subSectionId = subSectionIdOptional.orElse(null);
 
         if (subSectionId != null) {
-            init(browser, Map.of("subSectionId", subSectionId));
+            init(Map.of("subSectionId", subSectionId));
         }
     }
 
@@ -79,15 +78,15 @@ public class ProductBrowserView
             factoryEditorView.productEditorView(item.getId()).open();
         });
 
-        grid.setItems(browser.getListItems());
+        grid.setItems(getItems());
 
         add(grid);
     }
 
     @Override
     public void add() {
-        SubSectionDto subSection = browser.getSubSection(subSectionId);
-        ProductEditorView productEditorView = factoryEditorView.productEditorViewNew(subSection);
+        SubSectionDto subSection = getBrowser().getSubSection(subSectionId);
+        ProductEditorView productEditorView = factoryEditorView.productEditorView(subSection);
         productEditorView.addEditorCloseListener(this);
         productEditorView.open();
     }
@@ -103,7 +102,7 @@ public class ProductBrowserView
             return;
         }
 
-        browser.deleteProduct(selectedItems.iterator().next().getId());
+        getBrowser().deleteProduct(selectedItems.iterator().next().getId());
         refreshGrid();
     }
 
@@ -129,8 +128,8 @@ public class ProductBrowserView
     }
 
     private void refreshGrid() {
-        browser.refresh(Map.of("subSectionId", subSectionId));
-        grid.setItems(browser.getListItems());
+        getBrowser().refresh(Map.of("subSectionId", subSectionId));
+        grid.setItems(getItems());
         grid.getDataProvider().refreshAll();
     }
 }
