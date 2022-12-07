@@ -75,7 +75,7 @@ public class ProductBrowserView
 
         grid.addItemDoubleClickListener(e -> {
             ProductDto item = e.getItem();
-            factoryEditorView.productEditorView(item.getId()).open();
+            editInternal(item.getId());
         });
 
         grid.setItems(getItems());
@@ -116,8 +116,11 @@ public class ProductBrowserView
         if (selectedItems.size() > 1) {
             return;
         }
+        editInternal(selectedItems.iterator().next().getId());
+    }
 
-        ProductEditorView productEditorView = factoryEditorView.productEditorView(selectedItems.iterator().next().getId());
+    protected void editInternal(String productId) {
+        ProductEditorView productEditorView = factoryEditorView.productEditorView(productId);
         productEditorView.addEditorCloseListener(this);
         productEditorView.open();
     }

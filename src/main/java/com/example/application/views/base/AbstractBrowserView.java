@@ -16,7 +16,6 @@ import java.util.Objects;
 public abstract class AbstractBrowserView<T, K extends AbstractBrowser<T>> extends VerticalLayout {
 
     private K browser;
-    private Component currentComponent;
 
     public void init(Map<String, Object> params) {
         Objects.requireNonNull(browser);
