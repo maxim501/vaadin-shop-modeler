@@ -63,7 +63,7 @@ public abstract class AbstractEditorView<T, K extends AbstractEditor<T>> extends
     }
 
     public void saveDialog(ClickEvent<Button> e) {
-        editor.commit();
+        editor.commitInternal();
         closeInternal();
     }
 

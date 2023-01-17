@@ -44,9 +44,6 @@ public class ProductEditor extends AbstractEditor<ProductDto> {
 
     @Override
     public void commit() {
-        if (!isModified()) {
-            return;
-        }
         if (Boolean.TRUE.equals(getNew())) {
             shopService.createProduct(getItem());
         } else {

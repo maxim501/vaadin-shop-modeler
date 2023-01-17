@@ -36,7 +36,7 @@ public abstract class AbstractBrowserView<T, K extends AbstractBrowser<T>> exten
         return getBrowser().getListItems();
     }
 
-    private void buildViewInternal() {
+    public void buildViewInternal() {
         removeAll();
 
         if (hasButtonsFrame()) {

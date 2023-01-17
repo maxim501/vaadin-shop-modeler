@@ -19,6 +19,13 @@ public abstract class AbstractEditor<T> {
 
     private Boolean isNew = false;
 
+    public void commitInternal(){
+        if (!isModified()) {
+            return;
+        }
+        commit();
+    }
+
     /**
      * Коммит сущности
      */
